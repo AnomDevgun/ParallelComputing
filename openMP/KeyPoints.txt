@@ -1,0 +1,3 @@
+Race condition: is when unintended access is done by threads, to solve this we use synchronization techniques.
+Synchronization: should be used as little as possible as it makes the effectivness of multi threaded programming less.
+openMP: allows for multithreaded programming on shared memory architechture (SMP- symmetric multiprocessing)
