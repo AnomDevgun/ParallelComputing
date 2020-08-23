@@ -1,0 +1,3 @@
+To run: gcc -fopenmp filename.c
+
+To set threads: export OMP_NUM_THREADS = thread_number
