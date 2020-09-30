@@ -1,0 +1,3 @@
+language = "c"
+#run = "gcc -fopenmp openMP/HelloWorld.c"
+run = './a.out'
