@@ -1,0 +1,33 @@
+With the expectation of higher performance every generation, the physical hardware(like transistors) on processors were rapidly increasing. This was previously predicted by Moore, who stated that the number of transistors on processors would double every few generations (This law still holds true, more than 45 years later).
+
+But, these additional transistors needed more power, to the point where it became unfeasible. This phenomenon was called the 'Power Wall'. This was overcome by parallel processors(cores), which could provide the same throughput at merely 40% of the power consumption.
+
+Concurrency:
+A condition of a system in which multiple tasks are logically active at the same time.
+
+Parllelism:
+Parallelism is a subset of concurrency. It is the condition of a system in which multiple tasks are actually active at the same time.
+
+Concurrent Applications (Compulsory):
+Applications for which computations logically execute simultaneously due to the semantics of the application.
+
+Parallel Applications (Optional):
+Applications for which  computations actually execute simultaneously in order to complete a problem in less time.
+
+OpenMP: API for writing multithreaded applications.
+
+To compile openMP programs: gcc -fopenmp program_name.c
+
+Memory Components:
+Heap: The memory that we can manage
+Data: Includes the program variables and similar stuff
+Text: The part with the actual text of the program
+Stack: The part that is framented into threads. Each thread has its own program pointer and register set, but    they share the Text, Data and Heap segments.
+
+The number of threads can be greater than the number of processors/cores.
+
+Race Condition: 
+Unintended sharing of data by different threads. This will cause the output of a proram to be different every time it is executed.
+To control race conditions, use synchronization to protect data conflicts. Synchronization is resource-intensive, and should be minimized.
+
+
