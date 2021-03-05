@@ -11,15 +11,16 @@ double step;
 #define NUM_THREADS 4
 void main(){
   int i,nthreads;
-  double pi=0.0;     
+  double x,pi=0.0;     
   step = 1.0/(double)num_steps;
   omp_set_num_threads(NUM_THREADS);//Setting the number of threads
   double sum=0.0;     
   omp_set_schedule(omp_sched_dynamic,1);
   double t1 = omp_get_wtime();
-  #pragma omp parallel for schedule(static) reduction(+:sum)
+  #pragma omp parallel for private(x) reduction(+:sum)
+  //if a compiler does not recognize a directive, it simply skips that directive.
 	  for(i=0;i<num_steps;i++){
-	  	double x = (i+0.5)*step;
+	  	x = (i+0.5)*step;
 	  	sum = sum + 4.0/(1.0+x*x);
 	  }
   double t2 = omp_get_wtime();	  
