@@ -3,16 +3,27 @@
 #include<omp.h>
 
 
-#define n 1000
+//#define n 1000
 
 int main(){
   //////////////////////////////////////SERIAL CODE
-  // int n;
-  // printf("Please input dimension N of the matrices, the matrices will be randomly filled: ");
-  // scanf("%d",&n);
-  long long int a[n][n];
-  long long int b[n][n];
-  long long int res[n][n];
+  int n;
+  printf("Please input dimension N of the matrices, the matrices will be randomly filled: ");
+  scanf("%d",&n);
+  // long long int a[n][n];
+  // long long int b[n][n];
+  // long long int res[n][n];
+
+int **a = (int **)malloc(n * sizeof(int *));
+int **b = (int **)malloc(n * sizeof(int *));
+int **res = (int **)malloc(n * sizeof(int *));
+for (int i=0; i<n; i++)
+{
+  a[i] = (int *)malloc(n * sizeof(int));
+  b[i] = (int *)malloc(n * sizeof(int));
+  res[i] = (int *)malloc(n * sizeof(int));
+}
+
 
 double t5 = omp_get_wtime();
 #pragma omp parallel for
@@ -59,7 +70,7 @@ double t1 = omp_get_wtime();
           {
               for(int j=0;j<n;j++)
               {
-                  printf("%lld ",res[i][j]);
+                  printf("%d ",res[i][j]);
               }
               printf("\n");
           }
@@ -94,7 +105,7 @@ double t1 = omp_get_wtime();
           {
               for(int j=0;j<n;j++)
               {
-                  printf("%lld ",res[i][j]);
+                  printf("%d ",res[i][j]);
               }
               printf("\n");
           }
@@ -103,6 +114,9 @@ double t1 = omp_get_wtime();
       printf("Time taken in parallel to fill %f\n",(t6-t5) );
     printf("Time taken in serial to fill %f\n",(t8-t7) );
 
+free(a);
+free(b);
+free(res);
 
 
 }
