@@ -8,12 +8,26 @@
 
 static long num_steps = 100000;
 double step;
-#define NUM_THREADS 4
+#define NUM_THREADS 60
 #define PAD 8 //assume 64 byte L1 cache size line, 8 is the number of double precision words in a cache line, this avoids false sharing.
 void main(){
   int i,nthreads;
   double pi,sum[NUM_THREADS][PAD];     //Since all threads have their own stack and access shared local memory, to avoid race condition we create a sum array that stores individual thread sums
   step = 1.0/(double)num_steps;
+  //////// Testing in serial code
+
+    double x,sum2=0.0;
+    clock_t t = clock();
+    for(i=0;i<num_steps;i++){
+    	x = (i+0.5)*step;
+    	sum2 = sum2 + 4.0/(1.0+x*x);
+    }
+    t = clock() - t;
+    pi=0;
+    pi=step*sum2;
+    printf("(%f)\n",pi);
+    printf("Time taken in serial = %f\n",((double)t)/CLOCKS_PER_SEC);
+    ///////////////////////////////////////////////////
   omp_set_num_threads(NUM_THREADS);     //Setting the number of threads
   double t1 = omp_get_wtime();
   #pragma omp parallel
@@ -36,17 +50,5 @@ void main(){
   printf("(%f)\n",pi);
   printf("Time taken in parallel = %f\n",(t2-t1));
 
-//////// Now testing in non-parallel code
 
-  double x,sum2=0.0;
-  clock_t t = clock();
-  for(i=0;i<num_steps;i++){
-  	x = (i+0.5)*step;
-  	sum2 = sum2 + 4.0/(1.0+x*x);
-  }
-  t = clock() - t;
-  pi=0;
-  pi=step*sum2;
-  printf("%f\n",pi);
-  printf("Time taken when not in parallel = %f\n",((double)t)/CLOCKS_PER_SEC);
 }
