@@ -9,8 +9,6 @@
 #define FS 38
 #endif
 
-#define NUMTHREADS 3
-
 struct node {
    int data;
    int fibdata;
@@ -60,38 +58,20 @@ int main(int argc, char *argv[]) {
      struct node *p=NULL;
      struct node *temp=NULL;
      struct node *head=NULL;
-     int count =0,i,j;
-     omp_set_num_threads(NUMTHREADS);
-	printf("Process linked list\n");
+
+	 printf("Process linked list\n");
      printf("  Each linked list node will be processed by function 'processwork()'\n");
      printf("  Each ll node will compute %d fibonacci numbers beginning with %d\n",N,FS);
 
      p = init_list(p);
      head = p;
 
-
      start = omp_get_wtime();
      {
         while (p != NULL) {
-       	count++;
+		   processwork(p);
 		   p = p->next;
         }
-        printf("%d\n",count);
-        p=head;
-        #pragma omp parallel for firstprivate(p) private(j)
-          for(i=0;i<count;i++){
-            int skip = i;
-              if(i==0){
-                processwork(p);
-              }
-              else{
-                while(skip!=0){
-                  p=p->next;
-                  --skip;
-                }
-                processwork(p);
-              }
-          }
      }
 
      end = omp_get_wtime();
